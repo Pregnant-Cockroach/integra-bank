@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http.//www.thymeleaf.org/extras/spring-security">
+<head>
+ <meta charset="utf-8"/>
+ <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ <title>Integra Bank - Home</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+ <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+ <link th:href="@{/styles/bank/dash/style.css}" rel="stylesheet" />
+</head>
+<body class="bg-gray-200 min-h-screen flex">
+<!-- Sidebar -->
+<div class="sidebar">
+ <div class="p-2 flex flex-col items-center">
+  <div class="logo-fancy">
+   <img alt="Bank logo placeholder" class="side-content" height="100" th:src="@{/styles/logo/logo1.png}" width="100"/>
+   <h1 class="text-2xl text-center" style="font-family: 'Inknut Antiqua', serif;">Integra</h1>
+   <div class="separator"></div>
+  </div>
+ </div>
+ <nav class="menu">
+  <a href="#">Home</a>
+  <a href="#">Accounts</a>
+  <a href="#">Transactions</a>
+  <a href="#">Payments</a>
+  <a href="#">Settings</a>
+  <a href="#" class="your-class" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+  <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+  </form>
+
+ </nav>
+</div>
+<!-- Main Content -->
+<div class="main-content">
+ <h2 class="text-3xl font-bold mb-6">Welcome, <span th:text="${user.firstName}"></span>!</h2>
+ <div class="grid-container">
+  <div class="card">
+   <h3>Account Overview</h3>
+   <p>View your account balances and recent transactions.</p>
+  </div>
+  <div class="card">
+   <h3>Make a Payment</h3>
+   <p>Pay your bills and transfer money easily.</p>
+  </div>
+  <div class="card">
+   <h3>Transaction History</h3>
+   <p>Review your past transactions and statements.</p>
+  </div>
+  <div class="card">
+   <h3>Settings</h3>
+   <p>Manage your account settings and preferences.</p>
+  </div>
+  <div class="card">
+   <h3>Support</h3>
+   <p>Get help and support for your banking needs.</p>
+  </div>
+  <div class="card">
+   <h3>Logout</h3>
+   <p>Securely log out of your account.</p>
+  </div>
+ </div>
+</div>
+</body>
+</html>

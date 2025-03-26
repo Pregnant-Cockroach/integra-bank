@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integra Bank</title>
+    <link th:href="@{/styles/bank/dash/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="bank-container">
+        <div class="side-menu">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Accounts</a></li>
+                <li><a href="#">Transactions</a></li>
+                <li><a href="#">Payments</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a></li>
+
+                <form id="logoutForm" th:action="@{/logout}" method="POST" style="display: none;"></form>
+
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Welcome to Integra Bank</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla varius, velit in dapibus varius, arcu magna mattis eros.</p>
+        </div>
+    </div>
+</body>
+</html>

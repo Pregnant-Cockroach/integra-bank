@@ -1,0 +1,132 @@
+body {
+    font-family: 'Inknut Antiqua', serif; 
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #D9D9D9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+}
+
+.login-form {
+    flex: 1;
+    padding: 30px;
+    width: 400px;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Inknut Antiqua', serif; 
+    font-size: 30px;
+    margin-top: 5px; /* Добавленный отступ сверху */
+    font-weight: 500;
+}
+
+
+
+.form-group {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    font-family: 'Inknut Antiqua', serif;
+}
+
+
+.form-group label {
+    display: block;
+    margin-top: -5px; /* Добавленный отрицательный отступ снизу */
+    font-family: 'Inknut Antiqua', serif; /* Установка шрифта */
+    font-size: 16px; /* Установка размера шрифта */
+}
+
+.form-group input {
+    width: 250px;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group button {
+    width: 270px;
+    font-family: 'Inknut Antiqua', serif;
+    padding: 3px;
+    border: none;
+    background-color: #7B9A6D;
+    color: #000000;
+    cursor: pointer;
+    border-radius: 18px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.form-group button:hover {
+    background-color: #92A789;
+}
+
+.side-content {
+    background-color: #7B9A6D;
+    color: #fff;
+    text-align: center;
+    padding: 40px 15px; /* Увеличиваем верхний и нижний отступы */
+    flex: 0 0 200px;
+}
+
+.side-content h1 {
+    font-family: 'Inknut Antiqua', serif; 
+    color: black;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.side-content img {
+    width: 80px;
+    margin-top: 80px; /* Увеличиваем отступ снизу изображения */
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5)); /* Тень на изображении */
+}
+
+
+
+.login-container {
+    background-color: #D9D9D9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden;
+    position: relative; /* Добавлено для позиционирования псевдоэлементов */
+}
+
+.login-container::before,
+.login-container::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 1; /* Поднять псевдоэлементы над основным содержимым */
+}
+
+.login-container::before {
+    top: 0;
+    left: 0;
+    border-width: 60px 60px 0 0;
+    border-color: #142D1B transparent transparent transparent; /* Синий цвет для верхнего левого треугольника */
+}
+
+.login-container::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 0 60px 60px;
+    border-color: transparent transparent #8B8B8B transparent; /* Зелёный цвет для нижнего правого треугольника */
+}

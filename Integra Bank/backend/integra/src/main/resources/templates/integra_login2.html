@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Authorization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link th:href="@{/styles/login/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="side-content">
+            <img th:src="@{/styles/logo/logo2.png}" alt="Integra Bank Logo">
+            <h1>Integra Staff</h1>
+        </div>
+        <form action="#" th:action="@{/authenticateTheUser}" method="POST" class="login-form">
+            <h2>Authorization</h2>
+            <div th:if="${param.error}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#ac1c1c;">
+                <p>Invalid User ID or password.</p>
+            </div>
+            <div th:if="${param.logout}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#4EC02B;">
+                <p>You have logged out.</p>
+            </div>
+            <div class="form-group">
+                <label for="id">User ID:</label>
+                <input type="text" id="id" name="id" placeholder="id" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="password" required>
+            </div>
+            <div class="form-group button">
+                <button type="submit">Log in</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
