@@ -15,7 +15,7 @@
             <img th:src="@{/styles/logo/logo1.png}" alt="Integra Bank Logo">
             <h1>Integra Bank</h1>
         </div>
-        <form action="#" th:action="@{/authenticateTheUser}" method="POST" class="login-form">
+        <form action="#" th:action="@{/user/authenticateTheUser}" method="POST" class="login-form">
         <h2>Authorization</h2>
             <div th:if="${param.error}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#ac1c1c;">
                 <p>Invalid User ID or password.</p>

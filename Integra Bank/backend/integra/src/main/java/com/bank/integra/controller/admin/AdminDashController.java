@@ -15,6 +15,6 @@ public class AdminDashController {
 
     @GetMapping("/home")
     public String showMainAdminPage() {
-        return "admin_home";
+        return "adminDash";
     }
 }

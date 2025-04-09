@@ -1,0 +1,52 @@
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Integra Bank - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link th:href="@{/styles/bank/dash/style.css}" rel="stylesheet" />
+</head>
+<body class="bg-gray-200 min-h-screen flex">
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="p-8 flex flex-col items-center">
+        <div class="logo-fancy">
+            <img alt="Bank logo placeholder" class="side-content" height="100" th:src="@{/styles/logo/logo2.png}" width="100"/>
+            <h1 class="text-2xl text-center" style="font-family: 'Inknut Antiqua', serif;">Integra Bank</h1>
+        </div>
+    </div>
+    <nav class="menu">
+        <a href="#" class="your-class" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+        <form id="logoutForm" th:action="@{/admin/logout}" method="post" style="display: none;">
+        </form>
+    </nav>
+</div>
+<!-- Main Content -->
+<div class="main-content">
+    <h2 class="text-3xl font-bold mb-6">Admin Dashboard</h2>
+    <div class="grid-container">
+        <div class="card">
+            <h3>Create New User</h3>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="username">Username:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="username" placeholder="Enter username" type="text"/>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="password">Password:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="password" placeholder="Enter password" type="password"/>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="email">Email:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="email" placeholder="Enter email" type="email"/>
+                </div>
+                <button class="w-full py-2 bg-green-600 text-white font-semibold rounded shadow-md hover:bg-green-700" type="submit">Create User</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

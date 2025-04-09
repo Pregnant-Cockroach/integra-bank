@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class IntegraApplication {
 
 	public static void main(String[] args) {
-		//TODO Доделать кнопачку
 		SpringApplication.run(IntegraApplication.class, args);
 	}
 
