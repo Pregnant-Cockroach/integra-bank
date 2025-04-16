@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link th:href="@{/styles/bank/dash/style.css}" rel="stylesheet" />
 </head>
-<body class="bg-gray-200 min-h-screen flex">
+<body class="bg-gray-200 min-h-[820px] flex">
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="p-8 flex flex-col items-center">
@@ -30,21 +30,43 @@
     <div class="grid-container">
         <div class="card">
             <h3>Create New User</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" th:action="@{/admin/save-user}" method="post">
                 <div>
-                    <label class="block text-lg font-semibold mb-2" for="username">Username:</label>
-                    <input class="w-full p-2 border border-gray-300 rounded" id="username" placeholder="Enter username" type="text"/>
+                    <label class="block text-lg font-semibold mb-2" for="userId">User ID:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="userId" name="userId" placeholder="Enter user ID" type="number" required/>
                 </div>
                 <div>
                     <label class="block text-lg font-semibold mb-2" for="password">Password:</label>
-                    <input class="w-full p-2 border border-gray-300 rounded" id="password" placeholder="Enter password" type="password"/>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="password" name="password" placeholder="Enter password" type="password" required/>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="balance">Balance:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="balance" name="balance" placeholder="Enter balance" type="number" step="0.01" required/>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="firstName">First Name:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="firstName" name="firstName" placeholder="Enter first name" type="text" required/>
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold mb-2" for="lastName">Last Name:</label>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="lastName" name="lastName" placeholder="Enter last name" type="text" required/>
                 </div>
                 <div>
                     <label class="block text-lg font-semibold mb-2" for="email">Email:</label>
-                    <input class="w-full p-2 border border-gray-300 rounded" id="email" placeholder="Enter email" type="email"/>
+                    <input class="w-full p-2 border border-gray-300 rounded" id="email" name="email" placeholder="Enter email" type="email" required/>
                 </div>
-                <button class="w-full py-2 bg-green-600 text-white font-semibold rounded shadow-md hover:bg-green-700" type="submit">Create User</button>
+
+                <button
+                        class="w-full py-2 text-white font-semibold rounded shadow-md transition-colors duration-200"
+                        style="background-color: #7B9A6D;"
+                        onmouseover="this.style.backgroundColor='#6C895F';"
+                        onmouseout="this.style.backgroundColor='#7B9A6D';"
+                        type="submit"
+                >
+                    Create User
+                </button>
             </form>
+
         </div>
     </div>
 </div>

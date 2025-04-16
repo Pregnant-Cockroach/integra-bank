@@ -25,6 +25,23 @@ public class UserDetails {
     @Column(name = "transaction_history")
     private String transactionHistory;
 
+    @Column(name = "email")
+    private String email;
+
+    public UserDetails(Integer userId, Double balance, String firstName, String lastName, String transactionHistory, String email) {
+        this.userId = userId;
+        this.balance = balance;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.transactionHistory = transactionHistory;
+        this.email = email;
+    }
+
+    public UserDetails() {
+
+    }
+
+    // Getters and setters
     public Integer getUserId() {
         return userId;
     }
@@ -63,5 +80,13 @@ public class UserDetails {
 
     public void setTransactionHistory(String transactionHistory) {
         this.transactionHistory = transactionHistory;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
