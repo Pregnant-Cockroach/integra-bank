@@ -1,10 +1,11 @@
 package com.bank.integra.entities.person;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "members")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("ADMIN")
 public class Admin extends AbstractPerson{
     public Admin() {
 

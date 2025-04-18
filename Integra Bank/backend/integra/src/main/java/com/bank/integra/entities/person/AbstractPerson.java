@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@MappedSuperclass
+@Entity
+@Table(name = "members")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 public abstract class AbstractPerson {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -20,6 +23,17 @@ public abstract class AbstractPerson {
 
     @Column(name="active")
     private boolean active;
+
+    @Column(name = "dtype", insertable = false, updatable = false)
+    private String dtype;
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
 
     public List<String> getRoles() {
         return roles;
@@ -44,6 +58,7 @@ public abstract class AbstractPerson {
     public void setActive(boolean active) {
         this.active = active;
     }
+
     public String getPassword() {
         return password;
     }
@@ -51,5 +66,4 @@ public abstract class AbstractPerson {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

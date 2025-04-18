@@ -4,7 +4,7 @@ import com.bank.integra.entities.details.UserDetails;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="members")
+@DiscriminatorValue("USER")
 public class User extends AbstractPerson{
     public User() {
 

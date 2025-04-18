@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users - Integra Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+<div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-3xl font-bold mb-6">All Users</h2>
+
+    <table class="w-full text-left border-collapse">
+        <thead>
+        <tr class="bg-gray-200">
+            <th class="py-2 px-4 border-b">ID</th>
+            <th class="py-2 px-4 border-b">First Name</th>
+            <th class="py-2 px-4 border-b">Last Name</th>
+            <th class="py-2 px-4 border-b">Email</th>
+            <th class="py-2 px-4 border-b">Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}" class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b" th:text="${user.id}"></td>
+            <td class="py-2 px-4 border-b" th:text="${user.userDetails.firstName}"></td>
+            <td class="py-2 px-4 border-b" th:text="${user.userDetails.lastName}"></td>
+            <td class="py-2 px-4 border-b" th:text="${user.userDetails.email}"></td>
+            <td class="py-2 px-4 border-b" th:text="${user.userDetails.balance}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-6">
+        <a th:href="@{/admin/home}" class="text-blue-600 hover:underline">← Back to Dashboard</a>
+    </div>
+</div>
+</body>
+</html>
