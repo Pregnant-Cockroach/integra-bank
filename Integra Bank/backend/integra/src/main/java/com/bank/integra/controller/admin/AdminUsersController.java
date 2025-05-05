@@ -4,6 +4,7 @@ import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
 import com.bank.integra.entities.person.User;
 import com.bank.integra.services.DTO.AdminDTO;
+import com.bank.integra.services.admin.AdminUpdateUserService;
 import com.bank.integra.services.person.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AdminUsersController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AdminUpdateUserService adminUpdateUserService;
 
     @GetMapping("")
     public String showAllUsers(Model model) {
@@ -70,32 +74,14 @@ public class AdminUsersController {
         return "adminEditUser";
     }
 
-    //TODO AdminDTO не создаётся! В него вводятся пустые данные, тк форма обрабатывает данные не для админдто, а для эдит юзер с другими полями.
+
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable Integer id, @ModelAttribute @Valid AdminDTO adminDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("error", "Validation failed");
             return "redirect:/admin/users";
         }
-
-        System.out.println("oleg:" + adminDTO.getPassword() + "|");
-        User user = userService.getUserById(adminDTO.getUserId());
-        if(!adminDTO.getPassword().isBlank()) {
-            user.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
-        }
-        UserDetails userDetails = userDetailsRepository.findUserDetailsByUserId(adminDTO.getUserId());
-        if(adminDTO.getBalance() != null) {
-            userDetails.setBalance(adminDTO.getBalance());
-        }
-        userDetails.setFirstName(adminDTO.getFirstName());
-        userDetails.setLastName(adminDTO.getLastName());
-        userDetails.setEmail(adminDTO.getEmail());
-        user.setUserDetails(userDetails);
-        if (user == null) {
-            throw new RuntimeException("User " + id + " not found.");
-        }
-        userService.updateUser(user);
-        redirectAttributes.addFlashAttribute("update", true);
+        adminUpdateUserService.updateUserFromForm(id, adminDTO, bindingResult, redirectAttributes);
         return "redirect:/admin/users";
     }
 }
