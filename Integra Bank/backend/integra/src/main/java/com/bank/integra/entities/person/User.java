@@ -1,7 +1,10 @@
 package com.bank.integra.entities.person;
 
+import com.bank.integra.entities.details.Transaction;
 import com.bank.integra.entities.details.UserDetails;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("USER")

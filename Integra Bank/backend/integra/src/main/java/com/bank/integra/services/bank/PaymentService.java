@@ -4,6 +4,7 @@ import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
 import com.bank.integra.entities.person.AbstractPerson;
 import com.bank.integra.entities.person.User;
+import com.bank.integra.services.person.TransactionsService;
 import com.bank.integra.services.person.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class PaymentService {
 
     @Autowired
     private UserDetailsRepository userDetailsRepository;
+
+    @Autowired
+    private TransactionsService transactionsService;
 
     public PaymentService() {}
 
@@ -37,5 +41,7 @@ public class PaymentService {
         receiverUserDetails.setBalance(receiverUserDetails.getBalance() + amount);
         userDetailsRepository.save(payerUserDetails);
         userDetailsRepository.save(receiverUserDetails);
+
+        transactionsService.createAndSave(payerPersonId, receiverPersonId, amount, "");
     }
 }

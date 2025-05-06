@@ -1,9 +1,8 @@
 package com.bank.integra.entities.details;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user_details")
@@ -28,6 +27,12 @@ public class UserDetails {
     @Column(name = "email")
     private String email;
 
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Transaction> sentTransactions;
+
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+    private List<Transaction> receivedTransactions;
+
     public UserDetails(Integer userId, Double balance, String firstName, String lastName, String transactionHistory, String email) {
         this.userId = userId;
         this.balance = balance;
@@ -42,6 +47,23 @@ public class UserDetails {
     }
 
     // Getters and setters
+
+    public List<Transaction> getSentTransactions() {
+        return sentTransactions;
+    }
+
+    public void setSentTransactions(List<Transaction> sentTransactions) {
+        this.sentTransactions = sentTransactions;
+    }
+
+    public List<Transaction> getReceivedTransactions() {
+        return receivedTransactions;
+    }
+
+    public void setReceivedTransactions(List<Transaction> receivedTransactions) {
+        this.receivedTransactions = receivedTransactions;
+    }
+
     public Integer getUserId() {
         return userId;
     }
