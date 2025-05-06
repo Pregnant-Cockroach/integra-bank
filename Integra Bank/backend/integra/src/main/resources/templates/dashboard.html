@@ -87,11 +87,11 @@
     <input type="hidden" name="senderId" th:value="${user.userId}"/>
     <div>
      <label for="recipientId" class="block text-gray-700 text-sm font-bold mb-2">Recipient ID:</label>
-     <input type="text" id="recipientId" name="recipientId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter recipient ID">
+     <input type="text" id="recipientId" name="recipientId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter recipient ID"  required>
     </div>
     <div>
      <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount:</label>
-     <input type="number" id="amount" name="amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter amount">
+     <input type="decimal" id="amount" name="amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter amount" required>
     </div>
     <button
             class="w-full py-2 text-white font-semibold rounded shadow-md transition-colors duration-200"
@@ -106,5 +106,23 @@
   </div>
  </div>
 </div>
+
+<!-- Уведомление об успешной транзакции -->
+<div id="transactionNotification"
+     th:if="${param.transactionSuccess}"
+     class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-100">
+ Transaction successful.
+</div>
+
+<script>
+ // Убираем уведомление транзакции
+ setTimeout(() => {
+     const transNotif = document.getElementById("transactionNotification");
+     if (transNotif) {
+         transNotif.style.opacity = '0';
+         setTimeout(() => transNotif.remove(), 500);
+     }
+ }, 3000);
+</script>
 </body>
 </html>

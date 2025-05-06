@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Confirm Transaction - Integra Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="/styles/bank/dash/style.css" rel="stylesheet"/>
+    <style>
+        .dashboard-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center" style="font-family: 'Inknut Antiqua', serif;">
+<div class="dashboard-card max-w-lg w-full">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Confirm Transaction</h2>
+
+    <div class="text-gray-700 space-y-4 mb-6">
+        <p><strong>From:</strong> <span th:text="${transferData.senderId}"></span> (You)</p>
+        <p><strong>From:</strong> <span th:text="${transferData.recipientName} + ' ' + ${transferData.recipientLastName}"></span> (ID: <span th:text="${transferData.recipientId}"></span>)</p>
+        <p><strong>Amount:</strong> $<span class="text-2xl font-bold text-green-500" th:text="${transferData.amount}"></span></p>
+        <p><strong>Current Balance:</strong> $<span class="text-2xl font-bold text-green-500" th:text="${transferData.currentBalance}"></span></p>
+    </div>
+
+
+    <form th:action="@{/user/confirm-transfer}" method="post" class="flex flex-col space-y-3">
+        <input type="hidden" name="senderId" th:value="${transferData.senderId}"/>
+        <input type="hidden" name="recipientId" th:value="${transferData.recipientId}"/>
+        <input type="hidden" name="amount" th:value="${transferData.amount}"/>
+
+        <button type="submit"
+                class="w-full py-2 text-white font-semibold rounded transition"
+                style="background-color: #7B9A6D;"
+                onmouseover="this.style.backgroundColor='#6C895F';"
+                onmouseout="this.style.backgroundColor='#7B9A6D';">
+            Confirm Transfer
+        </button>
+
+        <a th:href="@{/user/home}"
+           class="text-center w-full py-2 text-red-500 border border-red-400 rounded hover:bg-red-100 transition">
+            Cancel
+        </a>
+    </form>
+</div>
+</body>
+</html>
