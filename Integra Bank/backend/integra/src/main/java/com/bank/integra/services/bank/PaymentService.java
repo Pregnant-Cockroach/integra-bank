@@ -25,6 +25,7 @@ public class PaymentService {
 
     public PaymentService() {}
 
+    //TODO сделать блок транзакции. Запрос с транзакцией отправляется под каким-то ключом (токеном) и новые запросы будут отклонены, пока предыдущий не закончится
     @Transactional
     public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, Model model) {
         if (receiverPersonId == payerPersonId || userService.getUserDetailsByUserId(receiverPersonId) == null || userService.getUserDetailsByUserId(payerPersonId) == null) {

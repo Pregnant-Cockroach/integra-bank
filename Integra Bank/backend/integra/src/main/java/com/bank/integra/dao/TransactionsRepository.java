@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//TODO Сделать вывод транзакций с сумарной инфой: кто, кому, сколько, когда, описание, без лишней херни
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transaction, Integer> {
     List<Transaction> findBySender(UserDetails sender);
     List<Transaction> findByRecipient(UserDetails recipient);
 }
-

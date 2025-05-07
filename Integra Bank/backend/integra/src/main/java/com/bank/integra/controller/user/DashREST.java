@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -20,7 +21,7 @@ public class DashREST {
     private TransactionsService transactionsService;
 
     @GetMapping("/transactions/{id}")
-    public List<Transaction> showPrint(@PathVariable Integer id) {
-        return transactionsService.getSentTransactions(id);
+    public List<Map<String, Object>> showPrint(@PathVariable Integer id) {
+        return transactionsService.getFormattedTransactionsForUser(id);
     }
 }
