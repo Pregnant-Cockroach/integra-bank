@@ -91,7 +91,7 @@ public class TransactionsService {
     public List<Map<String, Object>> getFormattedTransactionsForUserThreeRecent(Integer userId) {
         UserDetails user = userDetailsRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        List<Transaction> filtered = prepareLists(userId, user).subList(0,3);
+        List<Transaction> filtered = prepareLists(userId, user).subList(0,2);
         List<Map<String, Object>> result = formatLists(filtered, user);
         return result;
     }
