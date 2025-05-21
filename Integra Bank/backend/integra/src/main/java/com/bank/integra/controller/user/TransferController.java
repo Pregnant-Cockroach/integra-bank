@@ -31,6 +31,10 @@ public class TransferController {
     public String makeTransfer(@RequestParam Integer senderId,
                                @RequestParam Integer recipientId,
                                @RequestParam Double amount, Model model) {
+        if(userService.getUserDetailsByUserId(senderId) == null || userService.getUserDetailsByUserId(recipientId) == null) {
+            model.addAttribute("paymentErrorInvalidPayerId", "The user id is invalid. Please, try again.");
+            return "redirect:/user/home";
+        }
         TransferDTO transferDTO = new TransferDTO(senderId, recipientId, amount,
                     userService.getUserDetailsByUserId(senderId).getBalance(),
                     userService.getUserDetailsByUserId(recipientId).getFirstName(),

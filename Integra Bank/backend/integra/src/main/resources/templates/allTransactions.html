@@ -34,6 +34,45 @@
             background-color: #d1d5db; /* Gray background */
             cursor: not-allowed; /* Change cursor to indicate loading */
         }
+
+        /* Floating buttons */
+        .floating-button {
+            position: fixed;
+            left: 20px; /* Position at the left */
+            bottom: 20px; /* Position above the scroll-to-top button */
+            background-color: #d1d5db; /* Light gray */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .floating-button:hover {
+            background-color: #c0c4c7; /* Darker gray on hover */
+        }
+
+        .scroll-to-top {
+            background-color: #7B9A6D; /* Green background */
+            position: fixed;
+            right: 20px; /* Position at the left */
+            bottom: 20px; /* Position below the home button */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #6C895F; /* Darker green on hover */
+        }
     </style>
 </head>
 <body class="bg-gray-200 min-h-screen flex">
@@ -84,6 +123,14 @@
      th:if="${param.transactionSuccess}"
      class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-100">
     Transaction successful.
+</div>
+
+<!-- Floating Buttons -->
+<a th:href="@{/user/home}" class="floating-button" id="homeButton">
+    <i class="fas fa-home text-gray-800"></i> <!-- Home icon -->
+</a>
+<div class="scroll-to-top" id="scrollToTop">
+    <i class="fas fa-arrow-up text-white"></i> <!-- Up arrow icon -->
 </div>
 
 <!-- Scripts -->
@@ -145,6 +192,22 @@
     window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('loadMoreBtn').click();
     });
+
+    // Scroll to top functionality
+    document.getElementById('scrollToTop').addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Show/hide buttons based on scroll position
+    window.addEventListener('scroll', function () {
+        const scrollToTopButton = document.getElementById('scrollToTop');
+        const homeButton = document.getElementById('homeButton');
+        const shouldShow = document.body.scrollTop > 170 || document.documentElement.scrollTop > 170;
+
+        scrollToTopButton.style.display = shouldShow ? 'flex' : 'none';
+        homeButton.style.display = shouldShow ? 'flex' : 'none';
+    });
+
 
     // Remove notification after 3 seconds
     setTimeout(() => {

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
@@ -23,19 +22,19 @@
 
     <div class="text-gray-700 space-y-4 mb-6">
         <p><strong>From:</strong> <span th:text="${transferData.senderId}"></span> (You)</p>
-        <p><strong>From:</strong> <span th:text="${transferData.recipientName} + ' ' + ${transferData.recipientLastName}"></span> (ID: <span th:text="${transferData.recipientId}"></span>)</p>
+        <p><strong>To:</strong> <span th:text="${transferData.recipientName} + ' ' + ${transferData.recipientLastName}"></span> (ID: <span th:text="${transferData.recipientId}"></span>)</p>
         <p><strong>Amount:</strong> $<span class="text-2xl font-bold text-green-500" th:text="${transferData.amount}"></span></p>
         <p><strong>Current Balance:</strong> $<span class="text-2xl font-bold text-green-500" th:text="${transferData.currentBalance}"></span></p>
     </div>
 
-
-    <form th:action="@{/user/confirm-transfer}" method="post" class="flex flex-col space-y-3">
+    <form th:action="@{/user/confirm-transfer}" method="post" class="flex flex-col space-y-3" id="transferForm">
         <input type="hidden" name="idempotencyKey" id="idempotencyKey"/>
         <input type="hidden" name="senderId" th:value="${transferData.senderId}"/>
         <input type="hidden" name="recipientId" th:value="${transferData.recipientId}"/>
         <input type="hidden" name="amount" th:value="${transferData.amount}"/>
 
         <button type="submit"
+                id="confirmButton"
                 class="w-full py-2 text-white font-semibold rounded transition"
                 style="background-color: #7B9A6D;"
                 onmouseover="this.style.backgroundColor='#6C895F';"
@@ -53,6 +52,15 @@
     document.addEventListener("DOMContentLoaded", function () {
         const uuid = crypto.randomUUID();
         document.getElementById("idempotencyKey").value = uuid;
+
+        const form = document.getElementById("transferForm");
+        const confirmButton = document.getElementById("confirmButton");
+
+        form.addEventListener("submit", function () {
+            confirmButton.disabled = true; // Disable the button
+            confirmButton.innerText = "Processing..."; // Change button text
+            confirmButton.style.backgroundColor = "#6C895F"; // Change background color to indicate loading
+        });
     });
 </script>
 
