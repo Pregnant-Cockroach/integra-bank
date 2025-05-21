@@ -4,14 +4,12 @@ import com.bank.integra.services.DTO.TransferDTO;
 import com.bank.integra.services.bank.PaymentService;
 import com.bank.integra.services.person.TransactionsService;
 import com.bank.integra.services.person.UserService;
-import jakarta.annotation.PostConstruct;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.UUID;
 
 @RequestMapping("/user")
@@ -30,10 +28,15 @@ public class TransferController {
     @PostMapping("/transfer")
     public String makeTransfer(@RequestParam Integer senderId,
                                @RequestParam Integer recipientId,
-                               @RequestParam Double amount, Model model) {
-        if(userService.getUserDetailsByUserId(senderId) == null || userService.getUserDetailsByUserId(recipientId) == null) {
-            model.addAttribute("paymentErrorInvalidPayerId", "The user id is invalid. Please, try again.");
-            return "redirect:/user/home";
+                               @RequestParam Double amount, Model model, RedirectAttributes redirectAttributes) {
+        switch(checkBeforePayment(senderId,recipientId,amount)){
+            case 0:
+                redirectAttributes.addFlashAttribute("information", "The user id is invalid. Please, try again.");
+                return "redirect:/user/home";
+            case 1:
+                redirectAttributes.addFlashAttribute("information", "Not enough funds for transfer operation.");
+                return "redirect:/user/home";
+
         }
         TransferDTO transferDTO = new TransferDTO(senderId, recipientId, amount,
                     userService.getUserDetailsByUserId(senderId).getBalance(),
@@ -45,17 +48,24 @@ public class TransferController {
         return "confirmPayment";
     }
 
+    private int checkBeforePayment(Integer senderId, Integer recipientId, Double amount) {
+        if(paymentService.checkIfUserNull(senderId, recipientId, userService)) return 0;
+        if(paymentService.checkIfUserHasEnoughMoney(amount, userService.getUserDetailsByUserId(senderId))) return 1;
+        return 2;
+    }
+
 
     @PostMapping("confirm-transfer")
     public String confirmTransfer(@RequestParam Integer senderId,
                                   @RequestParam Integer recipientId,
                                   @RequestParam Double amount,
-                                  @RequestParam UUID idempotencyKey, Model model) {
+                                  @RequestParam UUID idempotencyKey, RedirectAttributes redirectAttributes) {
         try {
-            paymentService.makePayment(senderId, recipientId, amount, idempotencyKey, model);
+            paymentService.makePayment(senderId, recipientId, amount, idempotencyKey);
         } catch(RuntimeException e) {
             System.out.println("Duplicate of transaction.");
         }
-        return "redirect:/user/home?transactionSuccess=true";
+        redirectAttributes.addFlashAttribute("information", "Transaction successful");
+        return "redirect:/user/home";
     }
 }

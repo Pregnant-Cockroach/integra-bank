@@ -121,21 +121,24 @@
 </div>
 
 <!-- Уведомление об успешной транзакции -->
-<div id="transactionNotification"
-     th:if="${param.transactionSuccess}"
-     class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-100">
- Transaction successful.
+<!-- Универсальное уведомление из model -->
+<div id="infoNotification"
+     th:if="${information}"
+     th:text="${information}"
+     th:classappend="${information.contains('Transaction successful')} ? ' bg-green-500' : ' bg-red-500'"
+     class="fixed top-4 right-4 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-100">
 </div>
 
 <script>
- // Убираем уведомление транзакции
+ // Убираем уведомление через 3 секунды
  setTimeout(() => {
-     const transNotif = document.getElementById("transactionNotification");
-     if (transNotif) {
-         transNotif.style.opacity = '0';
-         setTimeout(() => transNotif.remove(), 500);
+     const infoNotif = document.getElementById("infoNotification");
+     if (infoNotif) {
+         infoNotif.style.opacity = '0';
+         setTimeout(() => infoNotif.remove(), 500);
      }
  }, 3000);
 </script>
+
 </body>
 </html>

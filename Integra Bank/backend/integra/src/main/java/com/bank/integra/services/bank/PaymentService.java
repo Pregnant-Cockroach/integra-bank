@@ -3,15 +3,11 @@ package com.bank.integra.services.bank;
 import com.bank.integra.dao.TransactionsRepository;
 import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
-import com.bank.integra.entities.person.AbstractPerson;
-import com.bank.integra.entities.person.User;
 import com.bank.integra.services.person.TransactionsService;
 import com.bank.integra.services.person.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import java.util.UUID;
 
@@ -35,13 +31,12 @@ public class PaymentService {
     public PaymentService() {}
 
     @Transactional
-    public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey, Model model) {
-        if (userNull(payerPersonId, receiverPersonId, model)) return;
+    public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey) {
+        if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
         if(!transactionsRepository.existsByIdempotencyKey(idempotencyKey.toString())) {
             UserDetails payerUserDetails = userService.getUserDetailsByUserId(payerPersonId);
             UserDetails receiverUserDetails = userService.getUserDetailsByUserId(receiverPersonId);
-            if (payerUserDetails.getBalance() < amount) {
-                model.addAttribute("paymentErrorNotEnoughFunds", "Not enough funds for transfer operation.");
+            if (checkIfUserHasEnoughMoney(amount, payerUserDetails)) {
                 return;
             }
             payerUserDetails.setBalance(payerUserDetails.getBalance() - amount);
@@ -56,9 +51,15 @@ public class PaymentService {
         }
     }
 
-    private boolean userNull(Integer payerPersonId, Integer receiverPersonId, Model model) {
+    public static boolean checkIfUserHasEnoughMoney(Double amount, UserDetails payerUserDetails) {
+        if (payerUserDetails.getBalance() < amount) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean checkIfUserNull(Integer payerPersonId, Integer receiverPersonId, UserService userService) {
         if (userService.getUserDetailsByUserId(receiverPersonId) == null || userService.getUserDetailsByUserId(payerPersonId) == null) {
-            model.addAttribute("paymentErrorInvalidPayerId", "The user id is invalid. Please, try again.");
             return true;
         }
         return false;
