@@ -27,10 +27,10 @@ public class UserDetails {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender")
     private List<Transaction> sentTransactions;
 
-    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipient")
     private List<Transaction> receivedTransactions;
 
     public UserDetails(Integer userId, Double balance, String firstName, String lastName, String transactionHistory, String email) {

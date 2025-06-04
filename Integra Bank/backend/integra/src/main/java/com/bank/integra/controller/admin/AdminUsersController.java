@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+//TODO Рекомендуется использовать "мягкое" удаления путём блокирования юзера. А ЕЩО лучше сделать и то и то. КРч реализовать БАН
 @Controller
 @RequestMapping("/admin/users")
 public class AdminUsersController {

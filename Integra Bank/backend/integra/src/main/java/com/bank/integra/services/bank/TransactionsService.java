@@ -63,16 +63,21 @@ public class TransactionsService {
         List<Map<String, Object>> result = new OlegList();
         for (Transaction t : filtered) {
             Map<String, Object> map = new HashMap<>();
-            if (t.getSender().equals(user)) {
+            UserDetails sender = t.getSender();
+            UserDetails recipient = t.getRecipient();
+            String senderName = (sender != null) ? sender.getFirstName() + " " + sender.getLastName()
+                    : "User is deleted.";
+            String recipientName = (recipient != null) ? recipient.getFirstName() + " " + recipient.getLastName()
+                    : "User is deleted.";
+
+            if (sender != null && sender.equals(user)) {
                 map.put("type", "SENT");
-                map.put("to", t.getRecipient().getFirstName() + " " + t.getRecipient().getLastName());
-                map.put("from", t.getSender().getFirstName() + " " + t.getSender().getLastName());
             } else {
                 map.put("type", "RECEIVED");
-                map.put("to", t.getRecipient().getFirstName() + " " + t.getRecipient().getLastName());
-                map.put("from", t.getSender().getFirstName() + " " + t.getSender().getLastName());
             }
 
+            map.put("from", senderName);
+            map.put("to", recipientName);
             map.put("amount", t.getBalance());
             map.put("timestamp", t.getEventTimeStamp());
             map.put("description", t.getDescription());

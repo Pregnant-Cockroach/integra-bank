@@ -28,12 +28,13 @@ public class Transaction implements Comparable<Transaction> {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id")
+    @JoinColumn(name = "sender_id", nullable = true)
     private UserDetails sender;
 
     @ManyToOne
-    @JoinColumn(name = "recipient_id")
+    @JoinColumn(name = "recipient_id", nullable = true)
     private UserDetails recipient;
+
 
     @Column(name = "idempotency_key", unique = true)
     private String idempotencyKey;
