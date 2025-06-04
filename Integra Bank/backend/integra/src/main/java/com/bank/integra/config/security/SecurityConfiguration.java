@@ -1,5 +1,6 @@
 package com.bank.integra.config.security;
 
+import com.bank.integra.services.security.authentication.CustomAuthenticationFailureHandler;
 import com.bank.integra.services.security.userDetails.AdminUserDetailsService;
 import com.bank.integra.services.security.userDetails.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class SecurityConfiguration {
 
     @Autowired
     private AdminUserDetailsService adminUserDetailsService;
+
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     /**
      * Security configuration for admin routes.
@@ -85,7 +89,7 @@ public class SecurityConfiguration {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/authenticateTheUser")
                         .defaultSuccessUrl("/user/home", true)
-                        .failureUrl("/user/login?error")
+                        .failureHandler(customAuthenticationFailureHandler)
                         .usernameParameter("id")
                         .passwordParameter("password")
                 )

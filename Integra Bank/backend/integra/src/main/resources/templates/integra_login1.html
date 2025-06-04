@@ -20,6 +20,9 @@
             <div th:if="${param.error}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#ac1c1c;">
                 <p>Invalid User ID or password.</p>
             </div>
+            <div th:if="${param.banned}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#ac1c1c;">
+                <p>This user is banned.</p>
+            </div>
             <div th:if="${param.logout}" style="margin-left: 20px; font-family: 'Inknut Antiqua', serif; font-weight: 700; color:#4EC02B;">
                 <p>You have logged out.</p>
             </div>
