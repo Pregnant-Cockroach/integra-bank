@@ -28,17 +28,13 @@ public class PaymentService {
     @Autowired
     private AsyncPdfGenerationService pdfGenerationService;
 
-    //TODO убери, тут не срут
-    @Autowired
-    private TransactionsRepository transactionsRepository;
-
     public PaymentService() {}
 
     @Transactional
     public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey) {
         if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
         if (checkIfUserIsBanned(receiverPersonId, userService)) return;
-        if(!transactionsRepository.existsByIdempotencyKey(idempotencyKey.toString())) {
+        if(!transactionsService.existsByIdempotencyKey(idempotencyKey.toString())) {
             UserDetails payerUserDetails = userService.getUserDetailsByUserId(payerPersonId);
             UserDetails receiverUserDetails = userService.getUserDetailsByUserId(receiverPersonId);
             if (checkIfUserHasEnoughMoney(amount, payerUserDetails)) {

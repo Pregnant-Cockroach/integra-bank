@@ -1,14 +1,17 @@
 package com.bank.integra.controller.user;
 
 import com.bank.integra.entities.details.UserDetails;
+import com.bank.integra.enums.EmailValidationResponse;
 import com.bank.integra.services.API.CurrencyService;
 import com.bank.integra.services.bank.TransactionsService;
 import com.bank.integra.services.person.UserService;
+import com.bank.integra.services.validation.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -79,11 +82,17 @@ public class DashboardController {
 
     //TODO Ва-ли-да-ци-я~
     @PostMapping("/change-email")
-    public String changeEmail(@RequestParam String newEmail, Authentication authentication) {
+    public String changeEmail(@RequestParam String newEmail, Authentication authentication, RedirectAttributes redirectAttributes) {
         Integer userId = Integer.parseInt(authentication.getName());
-        UserDetails user = userService.getUserDetailsByUserId(userId);
-        user.setEmail(newEmail);
-        userService.updateUserDetails(user);
+        EmailValidationResponse response = EmailValidation.checkEmail(newEmail, userId, userService);
+        if(response.isSuccess()) {
+            UserDetails user = userService.getUserDetailsByUserId(userId);
+            user.setEmail(newEmail);
+            userService.updateUserDetails(user);
+            redirectAttributes.addFlashAttribute("information", "Email was changed successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("information", response.getDescription());
+        }
         return "redirect:/user/settings";
     }
 

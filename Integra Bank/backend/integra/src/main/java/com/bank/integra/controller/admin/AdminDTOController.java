@@ -33,7 +33,6 @@ public class AdminDTOController {
     private AdminPersistUserService persistUserService;
 
     //TODO хуйня, валидацию тоже надо
-
     @PostMapping("/save-user")
     public String processForm(@Valid @ModelAttribute AdminDTO adminDTO, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {

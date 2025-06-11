@@ -5,6 +5,10 @@ import com.bank.integra.services.person.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
+// TODO: Рассмотреть добавление валидации через аннотации, например:
+// @NotNull, @Min(1), @DecimalMin("0.01") над полями и использование @Valid в контроллере
+// Это упростит проверку входных данных и улучшит читаемость
+
 @Data
 public class TransferDTO {
     private Integer senderId;

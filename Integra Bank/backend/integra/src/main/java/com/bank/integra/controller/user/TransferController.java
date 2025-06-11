@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
+//TODO Сделать отображение кнопачки скачать пдф транзакции
 @RequestMapping("/user")
 @Controller
 public class TransferController {
@@ -24,7 +25,7 @@ public class TransferController {
     @Autowired
     private TransactionsService transactionsService;
 
-    //TODO Запилить и валидацию!
+    //TODO case 1, 0, 3 - дриндж, переведи в енумы с константными значениями.
     @PostMapping("/transfer")
     public String makeTransfer(@RequestParam Integer senderId,
                                @RequestParam Integer recipientId,

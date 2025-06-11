@@ -65,4 +65,8 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findByDtype("USER");
     }
+
+    public Boolean existsByEmail(String email) {
+        return userDetailsRepository.existsByEmail(email);
+    }
 }

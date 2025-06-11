@@ -21,10 +21,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/users")
 public class AdminUsersController {
-    //TODO Слегка рыгань
     @Autowired
     private UserService userService;
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;

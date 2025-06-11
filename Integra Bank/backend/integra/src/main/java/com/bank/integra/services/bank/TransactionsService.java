@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 //TODO Написать тесты для транзекшнс хесторе
-//TODO и сделать динамическое отображение недавних транзакций, даже если < 3
 @Service
 public class TransactionsService {
 
@@ -131,6 +130,11 @@ public class TransactionsService {
     public Integer findTransactionIdByIdempotencyKey(String idempotencyKey) {
         Optional<Transaction> transactionOptional = transactionRepository.findByIdempotencyKey(idempotencyKey);
         return transactionOptional.map(Transaction::getId).orElse(null);
+    }
+
+    public Boolean existsByIdempotencyKey(String idempotencyKey) {
+        boolean transactionOptional = transactionRepository.existsByIdempotencyKey(idempotencyKey);
+        return transactionOptional;
     }
 
     public Optional<Transaction> getTransactionById(Integer id) {
