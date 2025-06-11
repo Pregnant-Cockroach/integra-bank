@@ -12,6 +12,10 @@ public class EmailValidation {
             return EmailValidationResponse.INVALID_FORMAT;
         }
 
+        if(email.length() > 254) {
+            return EmailValidationResponse.TOO_LONG;
+        }
+
         if(!email.matches("^[\\w-.]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
             return EmailValidationResponse.INVALID_FORMAT;
         }
@@ -25,11 +29,6 @@ public class EmailValidation {
         if(userService.existsByEmail(email)) {
             return EmailValidationResponse.ALREADY_TAKEN;
         }
-
-        if(email.length() > 254) {
-            return EmailValidationResponse.TOO_LONG;
-        }
-
 
         return EmailValidationResponse.OK;
     }

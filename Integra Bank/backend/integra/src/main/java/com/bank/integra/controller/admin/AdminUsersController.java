@@ -3,9 +3,11 @@ package com.bank.integra.controller.admin;
 import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
 import com.bank.integra.entities.person.User;
+import com.bank.integra.enums.EmailValidationResponse;
 import com.bank.integra.services.DTO.AdminDTO;
 import com.bank.integra.services.admin.AdminUpdateUserService;
 import com.bank.integra.services.person.UserService;
+import com.bank.integra.services.validation.EmailValidation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -102,7 +104,13 @@ public class AdminUsersController {
             redirectAttributes.addFlashAttribute("error", "Validation failed");
             return "redirect:/admin/users";
         }
-        adminUpdateUserService.updateUserFromForm(id, adminDTO, bindingResult, redirectAttributes);
+        EmailValidationResponse response = EmailValidation.checkEmail(adminDTO.getEmail(), adminDTO.getUserId(), userService);
+        if(response.isSuccess()) {
+            adminUpdateUserService.updateUserFromForm(id, adminDTO, bindingResult, redirectAttributes);
+            redirectAttributes.addFlashAttribute("information", "User was edited successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("information", response.getDescription());
+        }
         return "redirect:/admin/users";
     }
 }

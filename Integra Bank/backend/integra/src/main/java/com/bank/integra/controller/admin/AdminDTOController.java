@@ -39,6 +39,7 @@ public class AdminDTOController {
     private UserService userService;
 
     //TODO хуйня, валидацию тоже надо
+    //TODO эмейл, проверить, правильно ли проверяется почта? Может, регистр, так что попробуй трим (проблема сейм эсс карент)
     @PostMapping("/save-user")
     public String processForm(@Valid @ModelAttribute AdminDTO adminDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
@@ -46,6 +47,9 @@ public class AdminDTOController {
         }
         EmailValidationResponse response = EmailValidation.checkEmail(adminDTO.getEmail(), adminDTO.getUserId(), userService);
         if(response.isSuccess()) {
+            persistUserService.saveUserFromForm(adminDTO, model);
+            return "result";
+        } else if(response == EmailValidationResponse.EMAIL_IS_SAME_AS_CURRENT) {
             persistUserService.saveUserFromForm(adminDTO, model);
             return "result";
         } else {
