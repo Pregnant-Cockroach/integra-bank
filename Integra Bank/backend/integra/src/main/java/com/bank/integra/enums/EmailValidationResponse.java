@@ -24,7 +24,7 @@ public enum EmailValidationResponse {
     /**
      * Email адрес существует, но помечен как нежелательный (например, временный email).
      */
-    DISPOSABLE_EMAIL("Email address is temporary or disposable", true),
+    DISPOSABLE_EMAIL("Email address is temporary or disposable.", true),
 
     /**
      * Email адрес не существует на почтовом сервере.

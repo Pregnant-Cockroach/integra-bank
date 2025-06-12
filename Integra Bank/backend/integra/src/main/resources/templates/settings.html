@@ -37,7 +37,7 @@
         <a href="#">Payments</a>
         <a class="active">Settings</a>
         <a href="#" class="your-class" onclick="document.getElementById('logoutForm').submit();">Logout</a>
-        <form id="logoutForm" action="/user/logout" method="post" style="display: none;">
+        <form id="logoutForm" th:action="@{/user/logout}" method="post" style="display: none;">
         </form>
     </nav>
 </div>

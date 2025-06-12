@@ -2,19 +2,14 @@ package com.bank.integra.controller.admin;
 
 
 import com.bank.integra.dao.RolesRepository;
-import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.dao.UserRepository;
-import com.bank.integra.entities.details.UserDetails;
-import com.bank.integra.entities.person.User;
-import com.bank.integra.entities.role.Role;
 import com.bank.integra.enums.EmailValidationResponse;
 import com.bank.integra.services.DTO.AdminDTO;
 import com.bank.integra.services.admin.AdminPersistUserService;
 import com.bank.integra.services.person.UserService;
-import com.bank.integra.services.validation.EmailValidation;
+import com.bank.integra.services.validation.EmailValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,13 +34,12 @@ public class AdminDTOController {
     private UserService userService;
 
     //TODO хуйня, валидацию тоже надо
-    //TODO эмейл, проверить, правильно ли проверяется почта? Может, регистр, так что попробуй трим (проблема сейм эсс карент)
     @PostMapping("/save-user")
     public String processForm(@Valid @ModelAttribute AdminDTO adminDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if(bindingResult.hasErrors()) {
             return "redirect:/admin/home";
         }
-        EmailValidationResponse response = EmailValidation.checkEmail(adminDTO.getEmail(), adminDTO.getUserId(), userService);
+        EmailValidationResponse response = EmailValidator.checkEmail(adminDTO.getEmail(), adminDTO.getUserId(), userService);
         if(response.isSuccess()) {
             persistUserService.saveUserFromForm(adminDTO, model);
             return "result";
