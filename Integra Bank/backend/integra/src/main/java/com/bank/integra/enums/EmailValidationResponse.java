@@ -45,7 +45,7 @@ public enum EmailValidationResponse {
     // Поле для текстового описания
     private final String description;
     // Флаг, указывающий, является ли этот статус ошибкой
-    private final boolean isError;
+    private boolean isError;
 
     // Конструктор enum (всегда private)
     private EmailValidationResponse(String description, boolean isError) {
@@ -60,6 +60,10 @@ public enum EmailValidationResponse {
 
     public boolean isError() {
         return isError;
+    }
+
+    public void setError(boolean error) {
+        isError = error;
     }
 
     // Дополнительный метод для удобства, если нужна проверка на успех

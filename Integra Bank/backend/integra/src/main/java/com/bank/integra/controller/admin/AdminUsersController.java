@@ -105,7 +105,7 @@ public class AdminUsersController {
             return "redirect:/admin/users";
         }
         EmailValidationResponse response = EmailValidation.checkEmail(adminDTO.getEmail(), adminDTO.getUserId(), userService);
-        if(response.isSuccess()) {
+        if(response.isSuccess() || response.getDescription().equals(EmailValidationResponse.EMAIL_IS_SAME_AS_CURRENT.getDescription())) {
             adminUpdateUserService.updateUserFromForm(id, adminDTO, bindingResult, redirectAttributes);
             redirectAttributes.addFlashAttribute("information", "User was edited successfully.");
         } else {

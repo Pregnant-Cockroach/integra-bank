@@ -49,9 +49,6 @@ public class AdminDTOController {
         if(response.isSuccess()) {
             persistUserService.saveUserFromForm(adminDTO, model);
             return "result";
-        } else if(response == EmailValidationResponse.EMAIL_IS_SAME_AS_CURRENT) {
-            persistUserService.saveUserFromForm(adminDTO, model);
-            return "result";
         } else {
             redirectAttributes.addFlashAttribute("information", response.getDescription());
             return "redirect:/admin/home";

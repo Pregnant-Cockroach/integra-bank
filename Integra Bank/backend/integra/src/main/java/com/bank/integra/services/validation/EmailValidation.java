@@ -12,6 +12,8 @@ public class EmailValidation {
             return EmailValidationResponse.INVALID_FORMAT;
         }
 
+        email = email.trim();
+
         if(email.length() > 254) {
             return EmailValidationResponse.TOO_LONG;
         }
