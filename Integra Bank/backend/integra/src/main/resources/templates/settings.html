@@ -68,7 +68,7 @@
 
         <div class="dashboard-card col-span-1">
             <h3 class="text-xl font-semibold mb-2">Change Password</h3>
-            <form action="/user/change-password" method="post" class="flex flex-col space-y-3">
+            <form th:action="@{/user/change-password}" method="post" class="flex flex-col space-y-3">
                 <p class="block text-gray-700 text-sm font-bold mb-2">A confirmation link will be sent to your registered email address to proceed with the password change.</p>
                 <button
                         class="w-full py-2 text-white font-semibold rounded shadow-md transition-colors duration-200"
@@ -93,7 +93,7 @@
 <div id="infoNotification"
      th:if="${information}"
      th:text="${information}"
-     th:classappend="${information.contains('Email was changed successfully.')} ? ' bg-green-500' : ' bg-red-500'"
+     th:classappend="${information.contains('Email was changed successfully.') or information.contains('A confirmation email has been sent to your inbox.')} ? ' bg-green-500' : ' bg-red-500'"
      class="fixed top-4 right-4 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500 opacity-100">
 </div>
 

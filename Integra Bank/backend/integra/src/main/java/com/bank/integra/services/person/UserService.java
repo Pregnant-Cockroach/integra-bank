@@ -70,6 +70,12 @@ public class UserService {
         return userDetailsRepository.existsByEmail(email);
     }
 
+    public UserDetails getUserDetailsByEmail(String email) {
+        UserDetails details = userDetailsRepository.findUserDetailsByEmail(email);
+        return details;
+    }
+
+
     public Boolean existsByUserId(Integer id) {
         return userDetailsRepository.existsByUserId(id);
     }

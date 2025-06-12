@@ -3,6 +3,7 @@ package com.bank.integra.controller.user;
 import com.bank.integra.entities.details.UserDetails;
 import com.bank.integra.enums.EmailValidationResponse;
 import com.bank.integra.services.API.CurrencyService;
+import com.bank.integra.services.bank.EmailSenderService;
 import com.bank.integra.services.bank.TransactionsService;
 import com.bank.integra.services.person.UserService;
 import com.bank.integra.services.validation.EmailValidator;
@@ -24,6 +25,9 @@ public class DashboardController {
 
     @Autowired
     private TransactionsService transactionsService;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     @Autowired
     private CurrencyService currencyService;
@@ -78,6 +82,21 @@ public class DashboardController {
         UserDetails user = userService.getUserDetailsByUserId(userId);
         model.addAttribute("user", user);
         return "settings";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(Authentication authentication, RedirectAttributes redirectAttributes) {
+        Integer userId = Integer.parseInt(authentication.getName());
+        UserDetails user = userService.getUserDetailsByUserId(userId);
+        String email = user.getEmail();
+        EmailValidationResponse response = EmailValidator.checkEmail(email, userId, userService);
+        if(response.isSuccess() || response == EmailValidationResponse.EMAIL_IS_SAME_AS_CURRENT) {
+            emailSenderService.sendPasswordResetConfirmation(email);
+            redirectAttributes.addFlashAttribute("information", "A confirmation email has been sent to your inbox.");
+        } else {
+            redirectAttributes.addFlashAttribute("information", response.getDescription());
+        }
+        return "redirect:/user/settings";
     }
 
     @PostMapping("/change-email")
