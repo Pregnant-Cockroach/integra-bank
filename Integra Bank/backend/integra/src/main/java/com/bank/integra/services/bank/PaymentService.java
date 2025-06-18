@@ -3,6 +3,7 @@ package com.bank.integra.services.bank;
 import com.bank.integra.dao.TransactionsRepository;
 import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
+import com.bank.integra.entities.person.User;
 import com.bank.integra.services.person.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import java.util.UUID;
 
 //TODO Каждый sout - громкий пук, который отдаляет от логгера, не меняем!!
-//TODO валидации нада дахуа (себе можно отправить) + проверка на бан пользователя, забаненым не шлём бабло.
+//TODO Перевести всю логику валидации в отдельный класс (для контроллера тоже) и слать енумы в виде ответа, как у емаил валидатор
 @Service
 public class PaymentService {
     @Autowired
@@ -32,6 +33,7 @@ public class PaymentService {
 
     @Transactional
     public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey) {
+        if (checkIfUserTheSameAsCurrent(payerPersonId, receiverPersonId, userService)) return;
         if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
         if (checkIfUserIsBanned(receiverPersonId, userService)) return;
         if(!transactionsService.existsByIdempotencyKey(idempotencyKey.toString())) {
@@ -74,11 +76,28 @@ public class PaymentService {
         return false;
     }
 
+    public static boolean checkIfFormatCorrect(String receiverPersonId, String amount) {
+        try {
+            Integer.parseInt(receiverPersonId);
+            Double.parseDouble(amount);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     public static boolean checkIfUserIsBanned(Integer recipientId, UserService userService) {
         if(userService.getUserById(recipientId).isActive()) {
             return false;
         } else {
             return true;
         }
+    }
+
+    public static boolean checkIfUserTheSameAsCurrent(Integer payerPersonId, Integer receiverPersonId, UserService userService) {
+        if(userService.getUserDetailsByUserId(receiverPersonId) == userService.getUserDetailsByUserId(payerPersonId)) {
+            return true;
+        }
+        return false;
     }
 }

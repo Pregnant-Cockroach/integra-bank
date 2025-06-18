@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 
 //TODO Валидашку на пароль
+//TODO Попробовать юзнуть ассинхронщину. Типа пока там пароль кидается, юзер может заниматься своими делами.
+//TODO Нужно регистрировать сессии для политики кикандоса. Например, после смены пароля.
 @RequestMapping("/user")
 @Controller
 public class PasswordResetController {
