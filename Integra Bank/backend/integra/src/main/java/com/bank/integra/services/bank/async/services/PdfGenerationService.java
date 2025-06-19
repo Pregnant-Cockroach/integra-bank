@@ -1,8 +1,9 @@
-package com.bank.integra.services.bank;
+package com.bank.integra.services.bank.async.services;
 
 import com.bank.integra.dao.PdfRepository;
 import com.bank.integra.entities.details.PdfReceipt;
 import com.bank.integra.entities.details.Transaction;
+import com.bank.integra.services.bank.TransactionsService;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfReader;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 //TODO уже хренотень: ачо будет если не сгенерит квитанцию????? АЧО АКАК?? М???
 @Service
-public class AsyncPdfGenerationService {
+public class PdfGenerationService {
     @Autowired
     private TransactionsService transactionsService;
 

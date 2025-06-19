@@ -5,6 +5,7 @@ import com.bank.integra.services.DTO.TransferDTO;
 import com.bank.integra.services.bank.PaymentService;
 import com.bank.integra.services.bank.TransactionsService;
 import com.bank.integra.services.person.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,16 +30,11 @@ public class TransferController {
     //TODO case 1, 0, 3 - дриндж, переведи в енумы с константными значениями.
     @PostMapping("/transfer")
     public String makeTransfer(@RequestParam Integer senderId,
-                               @RequestParam String recipientId,
-                               @RequestParam String amount, Model model, RedirectAttributes redirectAttributes) {
+                               @RequestParam Integer recipientId,
+                               @RequestParam Double amount, Model model, RedirectAttributes redirectAttributes) {
 
-        if (!PaymentService.checkIfFormatCorrect(recipientId, amount)) {
-            redirectAttributes.addFlashAttribute("information", PaymentValidationResponse.INVALID_FORMAT.getDescription());
-            return "redirect:/user/home";
-        }
-        Integer recipientIds = Integer.parseInt(recipientId);
-        Double amounts = Double.parseDouble(amount);
-        switch(checkBeforePayment(senderId,recipientIds,amounts)){
+
+        switch(checkBeforePayment(senderId,recipientId,amount)){
             case 0:
                 redirectAttributes.addFlashAttribute("information", PaymentValidationResponse.INVALID_FORMAT.getDescription());
                 return "redirect:/user/home";
@@ -53,10 +49,10 @@ public class TransferController {
                 return "redirect:/user/home";
 
         }
-        TransferDTO transferDTO = new TransferDTO(senderId, recipientIds, amounts,
+        TransferDTO transferDTO = new TransferDTO(senderId, recipientId, amount,
                     userService.getUserDetailsByUserId(senderId).getBalance(),
-                    userService.getUserDetailsByUserId(recipientIds).getFirstName(),
-                    userService.getUserDetailsByUserId(recipientIds).getLastName());
+                    userService.getUserDetailsByUserId(recipientId).getFirstName(),
+                    userService.getUserDetailsByUserId(recipientId).getLastName());
 
         model.addAttribute("transferData", transferDTO);
         model.addAttribute("transactionOn", "true");
@@ -68,9 +64,9 @@ public class TransferController {
     private int checkBeforePayment(Integer senderId, Integer recipientId, Double amount) {
         if(PaymentService.checkIfUserNull(senderId, recipientId, userService)) return 0;
         if(PaymentService.checkIfUserHasEnoughMoney(amount, userService.getUserDetailsByUserId(senderId))) return 1;
-        if(PaymentService.checkIfUserTheSameAsCurrent(senderId, recipientId, userService)) return 2;
+        if(PaymentService.checkIfUserTheSameAsCurrent(senderId, recipientId)) return 2;
         if(PaymentService.checkIfUserIsBanned(recipientId, userService)) return 3;
-        return 2;
+        return 10; // КРИНЖ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
 

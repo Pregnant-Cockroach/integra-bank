@@ -1,10 +1,11 @@
-package com.bank.integra.services.bank;
+package com.bank.integra.services.bank.async.services;
 
 import com.bank.integra.services.security.token.PasswordResetTokenService;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,13 @@ public class EmailSenderService {
     private PasswordResetTokenService resetTokenService;
 
     //TODO сделать универсальный метод отправки, например, сделать енум, в котором предусмотрится сообщение с паролем, баном, логином и тп
+
+    /**
+     *
+     * @Async - метод работает асинхронно. Достаточно просто запроса с контроллера, как задача отправляется в пул и исоплнится, без лишних блоков.
+     * Как вариант, можно попробовать очередь или планировщик. (Но там будет новая сущность и с бд + @Scheduled)
+     */
+    @Async
     public void sendPasswordResetConfirmation(String toEmail) {
         try {
             String resetLink = generateResetLink(toEmail);

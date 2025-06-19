@@ -3,8 +3,10 @@ package com.bank.integra.controller.user;
 import com.bank.integra.entities.details.UserDetails;
 import com.bank.integra.enums.EmailValidationResponse;
 import com.bank.integra.services.API.CurrencyService;
-import com.bank.integra.services.bank.EmailSenderService;
+import com.bank.integra.services.bank.async.manager.AsyncManager;
+import com.bank.integra.services.bank.async.services.EmailSenderService;
 import com.bank.integra.services.bank.TransactionsService;
+import com.bank.integra.services.bank.async.tasks.EmailSendTask;
 import com.bank.integra.services.person.UserService;
 import com.bank.integra.services.validation.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class DashboardController {
     private TransactionsService transactionsService;
 
     @Autowired
-    private EmailSenderService emailSenderService;
+    private AsyncManager asyncManager;
 
     @Autowired
     private CurrencyService currencyService;
@@ -91,7 +93,7 @@ public class DashboardController {
         String email = user.getEmail();
         EmailValidationResponse response = EmailValidator.checkEmail(email, userId, userService);
         if(response.isSuccess() || response == EmailValidationResponse.EMAIL_IS_SAME_AS_CURRENT) {
-            emailSenderService.sendPasswordResetConfirmation(email);
+            asyncManager.runEmailSendTask(email);
             redirectAttributes.addFlashAttribute("information", "A confirmation email has been sent to your inbox.");
         } else {
             redirectAttributes.addFlashAttribute("information", response.getDescription());

@@ -1,9 +1,9 @@
 package com.bank.integra.services.bank;
 
-import com.bank.integra.dao.TransactionsRepository;
 import com.bank.integra.dao.UserDetailsRepository;
 import com.bank.integra.entities.details.UserDetails;
-import com.bank.integra.entities.person.User;
+import com.bank.integra.services.bank.async.manager.AsyncManager;
+import com.bank.integra.services.bank.async.services.PdfGenerationService;
 import com.bank.integra.services.person.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +27,12 @@ public class PaymentService {
     private TransactionsService transactionsService;
 
     @Autowired
-    private AsyncPdfGenerationService pdfGenerationService;
-
+    private AsyncManager asyncManager;
     public PaymentService() {}
 
     @Transactional
     public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey) {
-        if (checkIfUserTheSameAsCurrent(payerPersonId, receiverPersonId, userService)) return;
+        if (checkIfUserTheSameAsCurrent(payerPersonId, receiverPersonId)) return;
         if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
         if (checkIfUserIsBanned(receiverPersonId, userService)) return;
         if(!transactionsService.existsByIdempotencyKey(idempotencyKey.toString())) {
@@ -54,7 +53,7 @@ public class PaymentService {
                 @Override
                 public void afterCommit() {
                     // Этот код запустится после успешного коммита
-                    pdfGenerationService.generateReceiptAsync(transactionId+"");
+                    asyncManager.runPdfGenerationTask(transactionId+"");
                 }
             });
         } else {
@@ -94,8 +93,8 @@ public class PaymentService {
         }
     }
 
-    public static boolean checkIfUserTheSameAsCurrent(Integer payerPersonId, Integer receiverPersonId, UserService userService) {
-        if(userService.getUserDetailsByUserId(receiverPersonId) == userService.getUserDetailsByUserId(payerPersonId)) {
+    public static boolean checkIfUserTheSameAsCurrent(Integer payerPersonId, Integer receiverPersonId) {
+        if(payerPersonId.equals(receiverPersonId)) {
             return true;
         }
         return false;
