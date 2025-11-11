@@ -21,17 +21,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin")
 public class AdminDTOController {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RolesRepository rolesRepository;
+    private final AdminPersistUserService persistUserService;
+    private final UserService userService;
 
-    @Autowired
-    private RolesRepository rolesRepository;
-
-    @Autowired
-    private AdminPersistUserService persistUserService;
-
-    @Autowired
-    private UserService userService;
+    public AdminDTOController(UserService userService, AdminPersistUserService persistUserService,
+                              RolesRepository rolesRepository, UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
+        this.persistUserService = persistUserService;
+        this.userService = userService;
+    }
 
     //TODO хуйня, валидацию тоже надо
     @PostMapping("/save-user")

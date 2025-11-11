@@ -1,6 +1,7 @@
 package com.bank.integra.general.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -9,11 +10,15 @@ import java.util.Map;
 
 @Service
 public class DisposableEmailChecker {
-    @Autowired
-    private RestTemplate restTemplate;
-    private final String API_URL = "https://disposable.debounce.io/";
+    private final RestTemplate restTemplate;
+    private final String API_URL;
 
-    public DisposableEmailChecker() {}
+    public DisposableEmailChecker(RestTemplate restTemplate, @Value("${app.api-disposable-email-url}") String apiUrl) {
+        this.restTemplate = restTemplate;
+        this.API_URL = apiUrl;
+    }
+
+
 
     public boolean isEmailDisposable(String email) {
         String url = UriComponentsBuilder.fromHttpUrl(API_URL)

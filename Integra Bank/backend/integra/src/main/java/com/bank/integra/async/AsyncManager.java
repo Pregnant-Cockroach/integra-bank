@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class AsyncManager {
-    @Autowired
-    private EmailSenderService senderService;
-    @Autowired
-    private PdfGenerationService generationService;
+    private final EmailSenderService senderService;
+    private final PdfGenerationService generationService;
 
+    public AsyncManager(EmailSenderService senderService, PdfGenerationService generationService) {
+        this.senderService = senderService;
+        this.generationService = generationService;
+    }
 
     @Async("asyncTaskExecutor")
     private void runAsync(AsyncTask task) {

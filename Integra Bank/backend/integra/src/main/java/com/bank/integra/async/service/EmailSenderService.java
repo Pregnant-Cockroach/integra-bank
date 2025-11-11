@@ -11,15 +11,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSenderService {
+    private final JavaMailSender mailSender;
+    private final PasswordResetTokenService resetTokenService;
+    private final String baseUrl;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    public EmailSenderService(JavaMailSender mailSender, PasswordResetTokenService resetTokenService,
+                              @Value("${app.base-url}")String apiUrl) {
+        this.mailSender = mailSender;
+        this.resetTokenService = resetTokenService;
+        this.baseUrl = apiUrl;
+    }
 
-    @Autowired
-    private PasswordResetTokenService resetTokenService;
 
-    @Value("${app.base-url}")
-    private String baseUrl;
+
 
     //TODO сделать универсальный метод отправки, например, сделать енум, в котором предусмотрится сообщение с паролем, баном, логином и тп
 

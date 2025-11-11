@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdminUserDetailsService implements UserDetailsService {
-    @Autowired
-    AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
+
+    public AdminUserDetailsService(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String adminId) throws UsernameNotFoundException {

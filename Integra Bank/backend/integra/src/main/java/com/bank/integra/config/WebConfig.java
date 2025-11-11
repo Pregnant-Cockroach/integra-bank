@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Autowired
-    private UserStatusInterceptor userStatusInterceptor;
+    private final UserStatusInterceptor userStatusInterceptor;
+
+    public WebConfig(UserStatusInterceptor userStatusInterceptor) {
+        this.userStatusInterceptor = userStatusInterceptor;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

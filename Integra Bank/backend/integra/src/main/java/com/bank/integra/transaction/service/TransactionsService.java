@@ -4,7 +4,6 @@ import com.bank.integra.transaction.model.Transaction;
 import com.bank.integra.transaction.repository.TransactionsRepository;
 import com.bank.integra.user.repository.UserDetailsRepository;
 import com.bank.integra.user.model.UserDetails;
-import com.bank.integra.general.util.OlegList;
 import com.bank.integra.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class TransactionsService {
     }
 
     private List<Map<String, Object>> formatLists(List<Transaction> filtered, UserDetails user) {
-        List<Map<String, Object>> result = new OlegList();
+        List<Map<String, Object>> result = new ArrayList<>();
         for (Transaction t : filtered) {
             Map<String, Object> map = new HashMap<>();
             UserDetails sender = t.getSender();

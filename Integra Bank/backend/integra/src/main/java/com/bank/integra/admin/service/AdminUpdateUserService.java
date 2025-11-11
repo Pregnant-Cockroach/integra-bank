@@ -13,10 +13,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Service
 public class AdminUpdateUserService {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    public AdminUpdateUserService(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional
     public void updateUserFromForm(Integer id, AdminDTO adminDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {

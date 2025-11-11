@@ -15,14 +15,18 @@ import org.springframework.ui.Model;
 
 @Service
 public class AdminPersistUserService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserDetailsRepository userDetailsRepository;
-    @Autowired
-    private RolesRepository rolesRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final UserDetailsRepository userDetailsRepository;
+    private final RolesRepository rolesRepository;
+
+    public AdminPersistUserService(PasswordEncoder passwordEncoder, UserService userService,
+                                   UserDetailsRepository userDetailsRepository, RolesRepository rolesRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
+        this.userDetailsRepository = userDetailsRepository;
+        this.rolesRepository = rolesRepository;
+    }
 
 
     @Transactional

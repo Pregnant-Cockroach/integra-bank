@@ -21,14 +21,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/users")
 public class AdminUsersController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final AdminUpdateUserService adminUpdateUserService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AdminUpdateUserService adminUpdateUserService;
+    public AdminUsersController(UserService userService, PasswordEncoder passwordEncoder,
+                                AdminUpdateUserService adminUpdateUserService) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.adminUpdateUserService = adminUpdateUserService;
+    }
 
     @GetMapping("")
     public String showAllUsers(Model model) {

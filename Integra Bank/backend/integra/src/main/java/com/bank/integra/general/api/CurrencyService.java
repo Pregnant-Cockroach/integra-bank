@@ -1,6 +1,7 @@
 package com.bank.integra.general.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,11 +12,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class CurrencyService {
-    @Autowired
-    private RestTemplate restTemplate;
-    private final String apiUrl = "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=11";
+    private final RestTemplate restTemplate;
+    private final String apiUrl;
 
-    public CurrencyService () {}
+    public CurrencyService(RestTemplate restTemplate, @Value("${app.api-currency-url}")String apiUrl) {
+        this.restTemplate = restTemplate;
+        this.apiUrl = apiUrl;
+    }
+
+
 
     public Map<String, Map<String, String>> getUsdExchangeRate() {
         List<Map<String, String>> exchangeRates = Arrays.asList(restTemplate.getForObject(apiUrl, Map[].class));
