@@ -1,23 +1,19 @@
 package com.bank.integra.tests;
 
-import com.bank.integra.dao.RolesRepository;
-import com.bank.integra.dao.UserDetailsRepository;
-import com.bank.integra.entities.details.UserDetails;
-import com.bank.integra.entities.person.User;
-import com.bank.integra.entities.role.Role;
-import com.bank.integra.services.DTO.AdminDTO;
-import com.bank.integra.services.admin.AdminPersistUserService;
-import com.bank.integra.services.person.UserService;
+import com.bank.integra.general.repository.RolesRepository;
+import com.bank.integra.user.model.UserDetails;
+import com.bank.integra.user.model.User;
+import com.bank.integra.general.model.Role;
+import com.bank.integra.admin.dto.AdminDTO;
+import com.bank.integra.admin.service.AdminPersistUserService;
+import com.bank.integra.user.service.UserService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import static org.junit.jupiter.api.Assertions.*;

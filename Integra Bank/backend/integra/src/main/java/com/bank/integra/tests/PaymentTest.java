@@ -1,9 +1,9 @@
 //package com.bank.integra.tests;
 //
-//import com.bank.integra.dao.UserDetailsRepository;
-//import com.bank.integra.entities.details.UserDetails;
-//import com.bank.integra.services.bank.PaymentService;
-//import com.bank.integra.services.person.UserService;
+//import com.bank.integra.user.repository.UserDetailsRepository;
+//import com.bank.integra.user.model.UserDetails;
+//import com.bank.integra.user.transaction.service.PaymentService;
+//import com.bank.integra.user.service.UserService;
 //import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.api.extension.ExtendWith;
 //import org.mockito.InjectMocks;

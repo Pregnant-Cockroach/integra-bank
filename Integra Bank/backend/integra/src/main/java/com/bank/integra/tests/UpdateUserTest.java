@@ -1,10 +1,10 @@
 package com.bank.integra.tests;
 
-import com.bank.integra.entities.details.UserDetails;
-import com.bank.integra.entities.person.User;
-import com.bank.integra.services.DTO.AdminDTO;
-import com.bank.integra.services.admin.AdminUpdateUserService;
-import com.bank.integra.services.person.UserService;
+import com.bank.integra.user.model.UserDetails;
+import com.bank.integra.user.model.User;
+import com.bank.integra.admin.dto.AdminDTO;
+import com.bank.integra.admin.service.AdminUpdateUserService;
+import com.bank.integra.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
