@@ -59,6 +59,7 @@ public class PaymentService {
         }
     }
 
+    //TODO Желательно убрать. У тебя аспект так-то есть.
     public static boolean checkIfUserHasEnoughMoney(Double amount, UserDetails payerUserDetails) {
         if (payerUserDetails.getBalance() < amount) {
             return true;
