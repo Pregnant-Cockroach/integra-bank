@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 //TODO Каждый sout - громкий пук, который отдаляет от логгера, не меняем!!
@@ -29,7 +30,7 @@ public class PaymentService {
     }
 
     @Transactional
-    public void makePayment(Integer payerPersonId, Integer receiverPersonId, Double amount, UUID idempotencyKey) {
+    public void makePayment(Integer payerPersonId, Integer receiverPersonId, BigDecimal amount, UUID idempotencyKey) {
         if (checkIfUserTheSameAsCurrent(payerPersonId, receiverPersonId)) return;
         if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
         if (checkIfUserIsBanned(receiverPersonId, userService)) return;
@@ -39,8 +40,8 @@ public class PaymentService {
             if (checkIfUserHasEnoughMoney(amount, payerUserDetails)) {
                 return;
             }
-            payerUserDetails.setBalance(payerUserDetails.getBalance() - amount);
-            receiverUserDetails.setBalance(receiverUserDetails.getBalance() + amount);
+            payerUserDetails.setBalance(payerUserDetails.getBalance().subtract(amount));
+            receiverUserDetails.setBalance(receiverUserDetails.getBalance().add(amount));
             userDetailsRepository.save(payerUserDetails);
             userDetailsRepository.save(receiverUserDetails);
             if(transactionsService.createAndSave(payerPersonId, receiverPersonId, amount, "", idempotencyKey) == null) {
@@ -60,8 +61,8 @@ public class PaymentService {
     }
 
     //TODO Желательно убрать. У тебя аспект так-то есть.
-    public static boolean checkIfUserHasEnoughMoney(Double amount, UserDetails payerUserDetails) {
-        if (payerUserDetails.getBalance() < amount) {
+    public static boolean checkIfUserHasEnoughMoney(BigDecimal amount, UserDetails payerUserDetails) {
+        if (payerUserDetails.getBalance().compareTo(amount) < 0) {
             return true;
         }
         return false;
@@ -77,7 +78,7 @@ public class PaymentService {
     public static boolean checkIfFormatCorrect(String receiverPersonId, String amount) {
         try {
             Integer.parseInt(receiverPersonId);
-            Double.parseDouble(amount);
+            new BigDecimal(amount);
         } catch (Exception e) {
             return false;
         }

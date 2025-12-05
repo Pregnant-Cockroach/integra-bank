@@ -8,6 +8,8 @@
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -22,7 +24,7 @@ DROP TABLE IF EXISTS `user_details`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_details` (
   `user_id` int NOT NULL,
-  `balance` double NOT NULL,
+  `balance` decimal(19,2) DEFAULT NULL,
   `first_name` text,
   `last_name` text,
   `email` text,
@@ -39,9 +41,10 @@ CREATE TABLE `user_details` (
 
 LOCK TABLES `user_details` WRITE;
 /*!40000 ALTER TABLE `user_details` DISABLE KEYS */;
-INSERT INTO `user_details` VALUES (1005,1000050924,'Krytoi','Mog','pgtoleg@gmail.com','',3),(1007,4436.01,'Obama','Bundarahmanovich','obama@gmail.com','nah',0),(1008,1.999998999943967e15,'Badik','Abirta$$$','abirtasbadik@gmail.com','',3),(1009,2,'Dolla','Dallasovich','obunga@gmail.com','',0);
+INSERT INTO `user_details` VALUES (1005,37000.26,'Krytoi','Mog','pgtoleg@gmail.com','',4),(1007,4436.01,'Obama','Bundarahmanovich','obama@gmail.com','nah',0),(1008,1000399999962999.74,'Badik','Abirta$$$','abirtasbadik@gmail.com','',4),(1009,2.00,'Dolla','Dallasovich','obunga@gmail.com','',0);
 /*!40000 ALTER TABLE `user_details` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2025-12-06  0:13:45

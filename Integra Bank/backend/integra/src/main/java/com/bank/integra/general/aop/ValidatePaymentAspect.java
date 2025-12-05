@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+
 @Aspect
 @Component
 public class ValidatePaymentAspect {
@@ -30,7 +32,7 @@ public class ValidatePaymentAspect {
         Authentication authentication = (Authentication) args[0];
         Integer senderId = Integer.parseInt(authentication.getName());
         Integer recipientId = (Integer) args[1];
-        Double amount = (Double) args[2];
+        BigDecimal amount = (BigDecimal) args[2];
         RedirectAttributes redirectAttributes = (RedirectAttributes) args[4];
 
         // Проверка на null (аналог checkIfUserNull)
@@ -40,7 +42,7 @@ public class ValidatePaymentAspect {
         }
 
         // Проверка на баланс (аналог checkIfUserHasEnoughMoney)
-        if (userService.getUserDetailsByUserId(senderId).getBalance() < amount) {
+        if (userService.getUserDetailsByUserId(senderId).getBalance().compareTo(amount) < 0) {
             redirectAttributes.addFlashAttribute("information", PaymentValidationResponse.NOT_ENOUGH_FUNDS.getDescription());
             return "redirect:/user/home";
         }

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 //TODO Сделать отображение кнопачки скачать пдф транзакции
@@ -33,7 +34,7 @@ public class TransferController {
     @ValidatePayment
     @PostMapping("/transfer")
     public String makeTransfer(Authentication authentication, @RequestParam Integer recipientId,
-                               @RequestParam Double amount, Model model, RedirectAttributes redirectAttributes) {
+                               @RequestParam BigDecimal amount, Model model, RedirectAttributes redirectAttributes) {
 
         Integer senderId = Integer.parseInt(authentication.getName());
         TransferDTO transferDTO = new TransferDTO(senderId, recipientId, amount,
@@ -51,7 +52,7 @@ public class TransferController {
     @PostMapping("confirm-transfer")
     public String confirmTransfer(Authentication authentication,
                                   @RequestParam Integer recipientId,
-                                  @RequestParam Double amount,
+                                  @RequestParam BigDecimal amount,
                                   @RequestParam UUID idempotencyKey, RedirectAttributes redirectAttributes) {
         try {
             Integer senderId = Integer.parseInt(authentication.getName());
