@@ -7,6 +7,7 @@ import com.bank.integra.transaction.service.PaymentService;
 import com.bank.integra.transaction.service.TransactionsService;
 import com.bank.integra.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,10 +58,14 @@ public class TransferController {
         try {
             Integer senderId = Integer.parseInt(authentication.getName());
             paymentService.makePayment(senderId, recipientId, amount, idempotencyKey);
+            redirectAttributes.addFlashAttribute("information", "Transaction successful");
+        } catch (ObjectOptimisticLockingFailureException y) {
+            redirectAttributes.addFlashAttribute("information", "The system is overloaded. Please, try again.");
         } catch(RuntimeException e) {
+            redirectAttributes.addFlashAttribute("information", "Transaction error.");
             System.out.println("Duplicate of transaction.");
         }
-        redirectAttributes.addFlashAttribute("information", "Transaction successful");
+
         return "redirect:/user/home";
     }
 }

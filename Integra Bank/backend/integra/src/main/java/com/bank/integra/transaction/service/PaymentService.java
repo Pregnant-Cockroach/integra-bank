@@ -5,6 +5,9 @@ import com.bank.integra.user.model.UserDetails;
 import com.bank.integra.async.AsyncManager;
 import com.bank.integra.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -30,6 +33,11 @@ public class PaymentService {
     }
 
     @Transactional
+    @Retryable(
+            retryFor = { ObjectOptimisticLockingFailureException.class },
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 50)
+    )
     public void makePayment(Integer payerPersonId, Integer receiverPersonId, BigDecimal amount, UUID idempotencyKey) {
         if (checkIfUserTheSameAsCurrent(payerPersonId, receiverPersonId)) return;
         if (checkIfUserNull(payerPersonId, receiverPersonId, userService)) return;
