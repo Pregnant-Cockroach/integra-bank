@@ -18,7 +18,7 @@ import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-//TODO уже хренотень: ачо будет если не сгенерит квитанцию????? АЧО АКАК?? М???
+//TODO Receipt retry generation would be very preferable is something goes wrong.
 @Service
 @Slf4j
 public class PdfGenerationService {

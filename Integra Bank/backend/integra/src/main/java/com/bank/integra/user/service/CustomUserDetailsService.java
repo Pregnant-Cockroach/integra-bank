@@ -16,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO Нужен логгер для логов
 
 /**
  * Этот класс распознаёт юзеров по их ролям. То есть если роль юзера: "ROLE_EMPLOYEE", тогда пускаем, иначе вам на другой логин. (Так же с {@link AdminUserDetailsService})
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    //TODO А че не сервис?
     private final UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {

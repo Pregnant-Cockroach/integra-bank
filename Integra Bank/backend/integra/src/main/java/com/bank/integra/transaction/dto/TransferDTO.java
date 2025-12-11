@@ -4,9 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-// TODO: Рассмотреть добавление валидации через аннотации, например:
-// @NotNull, @Min(1), @DecimalMin("0.01") над полями и использование @Valid в контроллере
-// Это упростит проверку входных данных и улучшит читаемость
+// TODO Validation for fields
 
 @Data
 public class TransferDTO {

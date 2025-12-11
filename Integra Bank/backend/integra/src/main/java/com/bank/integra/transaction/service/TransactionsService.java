@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
-//TODO Написать тесты для транзекшнс хесторе
+//TODO Make tests for transactions history
 @Service
 public class TransactionsService {
     private final TransactionsRepository transactionRepository;

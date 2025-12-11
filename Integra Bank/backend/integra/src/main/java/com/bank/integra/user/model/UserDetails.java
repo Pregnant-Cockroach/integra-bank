@@ -14,12 +14,10 @@ public class UserDetails {
     @Column(name = "user_id")
     private Integer userId;
 
-    // TODO трай кетч с ретраем (старая версия - обновите)
     @Version
     @Column(name = "version")
     private Long version;
 
-    // TODO меняй дабл на Big_Decimal))) ВЕЗДЕ)))
     @Column(name = "balance")
     private BigDecimal balance;
 

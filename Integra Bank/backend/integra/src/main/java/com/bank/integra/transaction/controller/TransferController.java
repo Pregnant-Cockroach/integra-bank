@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-//TODO Сделать отображение кнопачки скачать пдф транзакции
+//TODO Make "download pdf receipt" view button
 @RequestMapping("/user")
 @Controller
 @Slf4j
@@ -34,7 +34,6 @@ public class TransferController {
         this.paymentValidation = paymentValidation;
     }
 
-    //TODO @RequestParam Integer senderId - выстрел себе в ногу. Не делай так. Легко подменить и будет пизда. Используй authentication
     @PostMapping("/transfer")
     public String makeTransfer(Authentication authentication, @RequestParam Integer recipientId,
                                @RequestParam BigDecimal amount, Model model, RedirectAttributes redirectAttributes) {

@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-//TODO Сделать норм инфо-поле, как у юзера с транзакциями.
+//TODO Make more responsive and accessible info-dash like user's transactions one.
 @Controller
 @RequestMapping("/admin/users")
 @Slf4j

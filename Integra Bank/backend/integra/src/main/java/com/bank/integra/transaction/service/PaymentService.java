@@ -17,8 +17,6 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import java.math.BigDecimal;
 import java.util.UUID;
 
-//TODO Каждый sout - громкий пук, который отдаляет от логгера, не меняем!!
-//TODO Перевести всю логику валидации в отдельный класс (для контроллера тоже) и слать енумы в виде ответа, как у емаил валидатор
 @Service
 @Slf4j
 public class PaymentService {
