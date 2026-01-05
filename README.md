@@ -131,4 +131,4 @@ public void generateReceiptAsync(String transactionId) {
 ```
 
 ## Author
-### Designed & developed by [\[Pregnant-Cockroach\]](https://github.com/Pregnant-Cockroach)
+### Designed & developed by [\[AgentVadim839\]](https://github.com/AgentVadim839)
